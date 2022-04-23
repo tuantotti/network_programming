@@ -1,0 +1,4 @@
+﻿  clientinfo.cpp
+D:\Network-Programming\SimpleC-Cplus\VDI\clientinfo\clientinfo.cpp(117,9): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'size_t'
+D:\Network-Programming\SimpleC-Cplus\VDI\clientinfo\clientinfo.cpp(117,9): message : consider using '%zd' in the format string
+  clientinfo.vcxproj -> D:\Network-Programming\SimpleC-Cplus\VDI\x64\Debug\clientinfo.exe
