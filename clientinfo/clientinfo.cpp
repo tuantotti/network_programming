@@ -102,7 +102,6 @@ int main()
 	{
 		send(client,buffer,strlen(buffer),0);
 	}
-	printf("%s", buffer);
 
 	char lpBuffer[100];
 	DWORD test;
@@ -114,10 +113,6 @@ int main()
 	{
 		int index = 0;
 
-			
-
-			/*send(client, i, strlen(i), 0);*/
-
 		for (PCHAR i = lpBuffer; *i; i+=strlen(lpBuffer)+1)
 		{
 			memcpy(buffer + index, i, strlen(i));
@@ -128,7 +123,6 @@ int main()
 				unsigned long totalSpace = dwBytesPerSect * dwSectPerClust * dwFreeClusters;
 
 				sprintf(temp, "%lu", totalSpace);
-				printf("\n%ul\n", totalSpace);
 				temp[strlen(temp)] = 0;
 
 				memcpy(buffer + index, temp, strlen(temp));
@@ -138,7 +132,6 @@ int main()
 
 		buffer[index] = 0;
 
-		printf("\n%s\n", buffer);
 	}
 	else
 		printf("GetLogicalDriveStrings() is failed lor!!! Error code: %d\n", GetLastError());

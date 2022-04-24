@@ -1,7 +1,7 @@
 ﻿  clientinfo.cpp
 D:\Network-Programming\SimpleC-Cplus\VDI\clientinfo\clientinfo.cpp(103,38): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\Network-Programming\SimpleC-Cplus\VDI\clientinfo\clientinfo.cpp(124,19): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
-D:\Network-Programming\SimpleC-Cplus\VDI\clientinfo\clientinfo.cpp(135,20): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
-D:\Network-Programming\SimpleC-Cplus\VDI\clientinfo\clientinfo.cpp(147,40): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\Network-Programming\SimpleC-Cplus\VDI\clientinfo\clientinfo.cpp(167,28): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\Network-Programming\SimpleC-Cplus\VDI\clientinfo\clientinfo.cpp(119,19): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
+D:\Network-Programming\SimpleC-Cplus\VDI\clientinfo\clientinfo.cpp(129,20): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
+D:\Network-Programming\SimpleC-Cplus\VDI\clientinfo\clientinfo.cpp(141,40): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\Network-Programming\SimpleC-Cplus\VDI\clientinfo\clientinfo.cpp(161,28): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   clientinfo.vcxproj -> D:\Network-Programming\SimpleC-Cplus\VDI\x64\Debug\clientinfo.exe
