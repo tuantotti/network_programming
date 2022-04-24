@@ -11,8 +11,6 @@ int main()
 	WSADATA wsa;
 	WSAStartup(MAKEWORD(2, 2), &wsa);
 
-	message* mess = new message;
-	mess->computer_name = new char();
 	int port = 0;
 	char server_address[256];
 
@@ -77,8 +75,6 @@ int main()
 	if (ret < sizeof(buff))
 	{
 		buff[ret] = 0;
-		//printf("Computer name: %s\n", buff);
-		memcpy(mess->computer_name, buff, strlen(buff));
 	}
 
 	buff[0]=0;
