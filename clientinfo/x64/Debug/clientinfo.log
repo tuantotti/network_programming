@@ -1,4 +1,7 @@
 ﻿  clientinfo.cpp
-D:\Network-Programming\SimpleC-Cplus\VDI\clientinfo\clientinfo.cpp(117,9): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'size_t'
-D:\Network-Programming\SimpleC-Cplus\VDI\clientinfo\clientinfo.cpp(117,9): message : consider using '%zd' in the format string
+D:\Network-Programming\SimpleC-Cplus\VDI\clientinfo\clientinfo.cpp(103,38): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\Network-Programming\SimpleC-Cplus\VDI\clientinfo\clientinfo.cpp(124,19): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
+D:\Network-Programming\SimpleC-Cplus\VDI\clientinfo\clientinfo.cpp(135,20): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
+D:\Network-Programming\SimpleC-Cplus\VDI\clientinfo\clientinfo.cpp(147,40): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\Network-Programming\SimpleC-Cplus\VDI\clientinfo\clientinfo.cpp(167,28): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   clientinfo.vcxproj -> D:\Network-Programming\SimpleC-Cplus\VDI\x64\Debug\clientinfo.exe

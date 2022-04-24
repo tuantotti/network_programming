@@ -1,6 +1,6 @@
 ﻿  serverinfo.cpp
-D:\Network-Programming\SimpleC-Cplus\VDI\serverinfo\serverinfo.cpp(47,9): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'size_t'
-D:\Network-Programming\SimpleC-Cplus\VDI\serverinfo\serverinfo.cpp(47,9): message : consider using '%zd' in the format string
-D:\Network-Programming\SimpleC-Cplus\VDI\serverinfo\serverinfo.cpp(59,10): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'size_t'
-D:\Network-Programming\SimpleC-Cplus\VDI\serverinfo\serverinfo.cpp(59,10): message : consider using '%zd' in the format string
+D:\Network-Programming\SimpleC-Cplus\VDI\serverinfo\serverinfo.cpp(76,36): warning C4101: 'disk_space': unreferenced local variable
+D:\Network-Programming\SimpleC-Cplus\VDI\serverinfo\serverinfo.cpp(76,22): warning C4101: 'disk_name': unreferenced local variable
+D:\Network-Programming\SimpleC-Cplus\VDI\serverinfo\serverinfo.cpp(76,7): warning C4101: 'infor': unreferenced local variable
+D:\Network-Programming\SimpleC-Cplus\VDI\serverinfo\serverinfo.cpp(139,28): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   serverinfo.vcxproj -> D:\Network-Programming\SimpleC-Cplus\VDI\x64\Debug\serverinfo.exe

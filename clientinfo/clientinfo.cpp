@@ -4,57 +4,70 @@
 #include <windows.h>
 #include <ws2tcpip.h>
 #include<stdio.h>
+#include<string>
+#include<cstring>
+
+
 
 #pragma comment (lib,"ws2_32")
 #pragma warning (disable:4996)
 
-
-typedef struct disk_info {
-	char* disk_name;
-	unsigned long disk_space;
-	disk_info* next;
-}disk_info;
-
-struct message {
-	char* computer_name;
-	disk_info* head;
-};
-
 int isNumber(char a);
-message* initMessage(char* name);
-void addnew(message* list, disk_info* newMessage);
-void printMessage(const message* list);
+char** splitString(char* input, char* delimitors, int* count);
 
 int main()
 {
+	/*std::string s = (std::to_string());
+	const char* freespace = s.c_str();*/
 	WSADATA wsa;
 	WSAStartup(MAKEWORD(2, 2), &wsa);
 
 	char server_address[256];
 	int port = 0;
 	int ret = 0;
-	message *mess=new message();
 
 	addrinfo* addr;
 	SOCKADDR_IN sockaddr;
 	sockaddr.sin_family = AF_INET;
 
 	// Nhập thông tin server
+	printf("Client\n");
 	printf("Nhap IP hoac ten mien server: ");
-	scanf("%s", &server_address);
+	fgets(server_address, sizeof(server_address), stdin);
 
-	if (isNumber(server_address[0]))
+	// bỏ ký tự xuống dòng bằng kết thúc xâu
+	server_address[strlen(server_address)-1] = 0;
+	int count = 0;
+	const char* file_name = "clientinfo.exe";
+
+	char** strings = splitString(server_address, (char*)" ", &count);
+
+	/*for (int i = 0; i < count; i++)
+		printf("%s\n", strings[i]);*/
+
+	if (strcmp(strings[0],file_name)!=0)
 	{
-		printf("Nhap port cua server: ");
-		fflush(stdin);
-		scanf("%d", &port);
+		printf("Not found near: %s", strings[0]);
+		return 1;
+	}
+
+	// convert char to int
+	sscanf(strings[2], "%d", &port);
+
+	if (port <= 0) {
+		printf("Port not found");
+		return 1;
+	}
+
+	if (isNumber(strings[1][0]))
+	{
 		sockaddr.sin_port = htons(port);
-		sockaddr.sin_addr.s_addr = inet_addr(server_address);
+		sockaddr.sin_addr.s_addr = inet_addr(strings[1]);
 	}
 	else
 	{
 		// đang bị lỗi không dns được localhost:port
-		ret = getaddrinfo(server_address, "http", NULL, &addr);
+		ret = getaddrinfo(strings[1], "http", NULL, &addr);
 		if (ret != 0)
 		{
 			printf("DNS that bai!!");
@@ -83,43 +96,55 @@ int main()
 	* gửi thông tin về tên máy, danh sách các ổ đĩa có trong máy, kích thước các ổ đĩa. 
 	*/
 
-	char buffer[256];
+	char buffer[2048];
 	DWORD size = sizeof(buffer);
 	if (GetComputerNameA((LPSTR)buffer, &size))
 	{
-		mess = initMessage(buffer);
+		send(client,buffer,strlen(buffer),0);
 	}
+	printf("%s", buffer);
+
 	char lpBuffer[100];
 	DWORD test;
 	DWORD dwSectPerClust, dwBytesPerSect, dwFreeClusters, dwTotalClusters;
 
 	test = GetLogicalDriveStringsA(sizeof(lpBuffer), (LPSTR)lpBuffer);
+
 	if (test != 0)
 	{
+		int index = 0;
+
+			
+
+			/*send(client, i, strlen(i), 0);*/
+
 		for (PCHAR i = lpBuffer; *i; i+=strlen(lpBuffer)+1)
 		{
+			memcpy(buffer + index, i, strlen(i));
+			index += strlen(i);
 			if (GetDiskFreeSpaceA(i, &dwSectPerClust, &dwBytesPerSect, &dwFreeClusters, &dwTotalClusters))
 			{
+				char temp[256];
 				unsigned long totalSpace = dwBytesPerSect * dwSectPerClust * dwFreeClusters;
 
-				disk_info *info = new disk_info();
-				info->disk_name = new char();
-				memcpy(info->disk_name, i, strlen(i) + 1);
-				info->disk_space = totalSpace;
+				sprintf(temp, "%lu", totalSpace);
+				printf("\n%ul\n", totalSpace);
+				temp[strlen(temp)] = 0;
 
-				addnew(mess, info);
+				memcpy(buffer + index, temp, strlen(temp));
+				index += strlen(temp);
 			}
 		}
+
+		buffer[index] = 0;
+
+		printf("\n%s\n", buffer);
 	}
 	else
 		printf("GetLogicalDriveStrings() is failed lor!!! Error code: %d\n", GetLastError());
 
-	printf("%d", sizeof(mess));
-	// hiển thị mess
-	printMessage(mess);
-
 	// gửi data đến server
-	send(client, (char*)mess, sizeof(mess), 0);
+	send(client, buffer, strlen(buffer), 0);
 
 	// đóng kết nối
 	closesocket(client);
@@ -136,46 +161,74 @@ int isNumber(char a) {
 	return 0;
 }
 
-message* initMessage(char *name) {
-	//CONTACTLIST* newList = (CONTACTLIST*)malloc(sizeof(CONTACTLIST));
-	message* newList = new message();
-	newList->head = NULL;
-	newList->computer_name = new char();
-	memcpy(newList->computer_name, name, strlen(name) + 1);
+char** splitString(char* input, char* delimitors, int* count) {
+	*count = 0;
+	int i = 0;
+	int length = strlen(input);
 
-	return newList;
-}
-
-void addnew(message* list, disk_info* newMessage) {
-	//TH1 danh sach ban dau rong -> them vao dau 
-	if (list->head == NULL) {
-		list->head = newMessage;
-		newMessage->next = NULL;
-	}
-	else // TH2 danh sach ban dau khong phai rong
+	while (i < length)
 	{
-		//1 tim vi tri chen 
-		if (strcmp(list->head->disk_name, newMessage->disk_name) > 0) {
-			newMessage->next = list->head;
-			list->head = newMessage;
-		}
-		else {
-			disk_info* pre = list->head;
-			while (pre->next != NULL && strcmp(list->head->disk_name, newMessage->disk_name) < 0)
-				pre = pre->next;
-			newMessage->next = pre->next;
-			pre->next = newMessage;
-		}
-	}
-}
+		while (i < length)
+		{
+			if (strchr(delimitors, input[i]) == NULL)
+				break;
 
-void printMessage(const message* list) {
-	disk_info* p = list->head;
-	printf("Computer name: %s\n", list->computer_name);
-	while (p != NULL) {
-		printf("Disk name: %s - Disk space: %ul\n",p->disk_name,p->disk_space);
-		p = p->next;
-	}
-}
+			i++;
+		}
 
+		int pre_i = i;
+
+		while (i < length)
+		{
+			if (strchr(delimitors, input[i]) != NULL)
+				break;
+
+			i++;
+		}
+
+		if (i > pre_i) *count += 1;
+	}
+
+	char** strings = new char* [*count];
+	int strings_index = 0;
+
+	char* buff = new char[length];
+	i = 0;
+
+	while (i < length)
+	{
+		while (i < length)
+		{
+			if (strchr(delimitors, input[i]) == NULL)
+				break;
+
+			i++;
+		}
+
+		int j = 0;
+
+		while (i < length)
+		{
+			if (strchr(delimitors, input[i]) != NULL)
+				break;
+			buff[j] = input[i];
+			i++;
+			j++;
+		}
+
+		if (j > 0)
+		{
+			buff[j] = 0;
+			strings[strings_index] = new char[strlen(buff) + 1];
+
+			memcpy(strings[strings_index], buff, strlen(buff) + 1);
+
+			strings_index++;
+		}
+
+
+	}
+	return strings;
+
+}
 // 192.168.1.2
