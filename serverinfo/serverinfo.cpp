@@ -4,18 +4,6 @@
 #pragma comment (lib,"ws2_32")
 #pragma warning (disable:4996)
 
-typedef struct disk_info {
-	char* disk_name;
-	unsigned long disk_space;
-	disk_info* next;
-}disk_info;
-
-struct message {
-	char* computer_name;
-	disk_info* head;
-};
-
-void printMessage(const message* list);
 char** splitString(char* input, char* delimitor, int* count);
 
 int main()
@@ -125,10 +113,6 @@ int main()
 		}
 	}
 	
-
-
-
-
 	printf("\nKet thuc nhan du lieu");
 
 }
