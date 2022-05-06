@@ -120,9 +120,9 @@ int main()
 			if (GetDiskFreeSpaceA(i, &dwSectPerClust, &dwBytesPerSect, &dwFreeClusters, &dwTotalClusters))
 			{
 				char temp[256];
-				unsigned long totalSpace = dwBytesPerSect * dwSectPerClust * dwFreeClusters;
+				float totalSpace = (float)dwBytesPerSect * (float)dwSectPerClust * (float)dwFreeClusters/(float)(1<<30);
 
-				sprintf(temp, "%lu", totalSpace);
+				sprintf(temp, "%f", totalSpace);
 				temp[strlen(temp)] = 0;
 
 				memcpy(buffer + index, temp, strlen(temp));
