@@ -1,0 +1,5 @@
+﻿  TCPServer.cpp
+D:\Network-Programming\SimpleC-Cplus\VDI\TCPServer\TCPServer.cpp(39,9): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'int *'
+D:\Network-Programming\SimpleC-Cplus\VDI\TCPServer\TCPServer.cpp(39,9): warning C4313: 'printf': '%d' in format string conflicts with argument 1 of type 'int *'
+D:\Network-Programming\SimpleC-Cplus\VDI\TCPServer\TCPServer.cpp(66,40): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  TCPServer.vcxproj -> D:\Network-Programming\SimpleC-Cplus\VDI\x64\Debug\TCPServer.exe
