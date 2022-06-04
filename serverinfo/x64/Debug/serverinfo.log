@@ -1,6 +1,0 @@
-﻿  serverinfo.cpp
-D:\Network-Programming\SimpleC-Cplus\VDI\serverinfo\serverinfo.cpp(62,36): warning C4101: 'disk_space': unreferenced local variable
-D:\Network-Programming\SimpleC-Cplus\VDI\serverinfo\serverinfo.cpp(62,22): warning C4101: 'disk_name': unreferenced local variable
-D:\Network-Programming\SimpleC-Cplus\VDI\serverinfo\serverinfo.cpp(62,7): warning C4101: 'infor': unreferenced local variable
-D:\Network-Programming\SimpleC-Cplus\VDI\serverinfo\serverinfo.cpp(119,28): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  serverinfo.vcxproj -> D:\Network-Programming\SimpleC-Cplus\VDI\x64\Debug\serverinfo.exe
