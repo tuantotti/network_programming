@@ -1,5 +1,0 @@
-﻿  ServerConsoleAsyncSelect.cpp
-D:\Network-Programming\SimpleC-Cplus\VDI\ServerConsoleAsyncSelect\ServerConsoleAsyncSelect.cpp(177,10): warning C4244: 'argument': conversion from 'SOCKET' to 'int', possible loss of data
-D:\Network-Programming\SimpleC-Cplus\VDI\ServerConsoleAsyncSelect\ServerConsoleAsyncSelect.cpp(211,10): warning C4244: 'initializing': conversion from 'LRESULT' to 'int', possible loss of data
-D:\Network-Programming\SimpleC-Cplus\VDI\ServerConsoleAsyncSelect\ServerConsoleAsyncSelect.cpp(212,40): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-  ServerConsoleAsyncSelect.vcxproj -> D:\Network-Programming\SimpleC-Cplus\VDI\x64\Debug\ServerConsoleAsyncSelect.exe

@@ -1,3 +1,0 @@
-﻿  clientinfo-test.cpp
-D:\Network-Programming\SimpleC-Cplus\VDI\clientinfo-test\clientinfo-test.cpp(42,40): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-  clientinfo-test.vcxproj -> D:\Network-Programming\SimpleC-Cplus\VDI\x64\Debug\clientinfo-test.exe

@@ -1,3 +1,0 @@
-﻿  VD9.cpp
-D:\Network-Programming\SimpleC-Cplus\VDI\VD9\VD9.cpp(17,1): warning C4326: return type of 'main' should be 'int' instead of 'void'
-D:\Network-Programming\SimpleC-Cplus\VDI\VD9\VD9.cpp(40): error C4716: 'calSum': must return a value
