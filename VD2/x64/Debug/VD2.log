@@ -1,0 +1,6 @@
+﻿  VD2.cpp
+D:\Network-Programming\SimpleC-Cplus\VDI\VD2\VD2.cpp(45,9): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'SOCKET'
+D:\Network-Programming\SimpleC-Cplus\VDI\VD2\VD2.cpp(45,9): message : consider using '%lld' in the format string
+D:\Network-Programming\SimpleC-Cplus\VDI\VD2\VD2.cpp(45,9): message : consider using '%Id' in the format string
+D:\Network-Programming\SimpleC-Cplus\VDI\VD2\VD2.cpp(45,9): message : consider using '%I64d' in the format string
+  VD2.vcxproj -> D:\Network-Programming\SimpleC-Cplus\VDI\x64\Debug\VD2.exe

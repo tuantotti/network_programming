@@ -1,10 +1,10 @@
 ﻿  ChatServerSelectModel.cpp
 D:\Network-Programming\SimpleC-Cplus\VDI\ChatServerSelectModel\ChatServerSelectModel.cpp(13,1): warning C4005: 'ERROR': macro redefinition
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\wingdi.h(118): message : see previous definition of 'ERROR'
-D:\Network-Programming\SimpleC-Cplus\VDI\ChatServerSelectModel\ChatServerSelectModel.cpp(102,12): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'SOCKET'
-D:\Network-Programming\SimpleC-Cplus\VDI\ChatServerSelectModel\ChatServerSelectModel.cpp(102,12): message : consider using '%lld' in the format string
-D:\Network-Programming\SimpleC-Cplus\VDI\ChatServerSelectModel\ChatServerSelectModel.cpp(102,12): message : consider using '%Id' in the format string
-D:\Network-Programming\SimpleC-Cplus\VDI\ChatServerSelectModel\ChatServerSelectModel.cpp(102,12): message : consider using '%I64d' in the format string
-D:\Network-Programming\SimpleC-Cplus\VDI\ChatServerSelectModel\ChatServerSelectModel.cpp(279,34): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\Network-Programming\SimpleC-Cplus\VDI\ChatServerSelectModel\ChatServerSelectModel.cpp(286,49): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\Network-Programming\SimpleC-Cplus\VDI\ChatServerSelectModel\ChatServerSelectModel.cpp(101,12): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'SOCKET'
+D:\Network-Programming\SimpleC-Cplus\VDI\ChatServerSelectModel\ChatServerSelectModel.cpp(101,12): message : consider using '%lld' in the format string
+D:\Network-Programming\SimpleC-Cplus\VDI\ChatServerSelectModel\ChatServerSelectModel.cpp(101,12): message : consider using '%Id' in the format string
+D:\Network-Programming\SimpleC-Cplus\VDI\ChatServerSelectModel\ChatServerSelectModel.cpp(101,12): message : consider using '%I64d' in the format string
+D:\Network-Programming\SimpleC-Cplus\VDI\ChatServerSelectModel\ChatServerSelectModel.cpp(273,41): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\Network-Programming\SimpleC-Cplus\VDI\ChatServerSelectModel\ChatServerSelectModel.cpp(280,47): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
   ChatServerSelectModel.vcxproj -> D:\Network-Programming\SimpleC-Cplus\VDI\x64\Debug\ChatServerSelectModel.exe

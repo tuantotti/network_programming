@@ -25,28 +25,27 @@ typedef struct clientInfor
 {
 	char clientId[32];
 	SOCKET client;
+	bool isConnected;
 }CLIENT_INFO;
 
 CLIENT_INFO clients[64];
 int numclients = 0;
 
-CLIENT_INFO connected[64];
-int numConnected = 0;
-
 
 void RemoveClient(int i);
 void removeLoggedIn(int i);
 bool isExistAccount(char* id);
-bool isLoggedIn(SOCKET client);
+bool isLoggedIn(CLIENT_INFO client);
 int isLoggedIn(char* id);
-CLIENT_INFO get(SOCKET client);
-int getIndex(SOCKET client);
-void connect(SOCKET client, char* id);
+void connect(CLIENT_INFO client, char* id);
 void disconnect(int i);
-void sendToClient(SOCKET client, char* msg);
-void sendToAll(SOCKET client, char* msg);
-void getCurrentLoggedIn(SOCKET client);
+void sendToClient(CLIENT_INFO client, char* msg);
+void sendToAll(CLIENT_INFO client, char* msg);
+void getCurrentLoggedIn(CLIENT_INFO client);
+int get(char* id);
+int get(SOCKET client);
 void sendMessage(int i, char* option, char* msg);
+
 
 int main()
 {
@@ -102,6 +101,7 @@ int main()
 				printf("new client: %d\n", client);
 
 				clients[numclients].client = client;
+				clients[numclients].isConnected = false;
 				numclients++;
 			}
 
@@ -119,9 +119,9 @@ int main()
 					}
 
 					buf[ret - 1] = 0;
-					printf("Data from client %s: %s\n", clients[i].clientId, buf);
+					printf("Data from client: %s\n", buf);
 
-					SOCKET client = clients[i].client;
+					CLIENT_INFO client = clients[i];
 
 					ret = sscanf(buf, "%s %s %s", cmd, id, tmp);
 
@@ -132,37 +132,36 @@ int main()
 						{
 							connect(client, id);
 						}
+						else if (strcmp(cmd, CONNECT) != 0)
+						{
+							char sbuf[256];
+							sprintf(sbuf, "You need login to use: %s\n", buf);
+							sendToClient(client, sbuf);
+						}
 					}
 					else
 					{
-						CLIENT_INFO loggedInClientInfo = get(client);
-						SOCKET loggedInClient = loggedInClientInfo.client;
-						int index = getIndex(loggedInClient);
-
-
 						if (strcmp(cmd, LIST) == 0 && ret == 1)
 						{
-							getCurrentLoggedIn(loggedInClient);
+							getCurrentLoggedIn(client);
 						}
 
 						if (strcmp(cmd, DISCONNECT) == 0 && ret == 1)
 						{
-							RemoveClient(i);
-							i--;
-							disconnect(index);
+							disconnect(i);
 						}
 
 						if (strcmp(cmd, SEND) == 0 && ret > 2)
 						{
 							char* msg = buf + strlen(cmd) + strlen(id) + 2;
-							sendMessage(index, id, msg);
+							sendMessage(i, id, msg);
 						}
 
 						if (ret < 1 || (strcmp(cmd, LIST) != 0 && strcmp(cmd, DISCONNECT) != 0 && strcmp(cmd, SEND) != 0))
 						{
 							char sbuf[256];
 							sprintf(sbuf, "%s %s %s\n", ERROR, cmd, "Not Found.");
-							sendToClient(loggedInClient, sbuf);
+							sendToClient(client, sbuf);
 						}
 					}
 
@@ -187,8 +186,7 @@ void RemoveClient(int i)
 }
 
 void removeLoggedIn(int i) {
-	connected[i] = connected[numConnected - 1];
-	numConnected--;
+	clients[i].isConnected = false;
 }
 
 bool isExistAccount(char* id) {
@@ -208,35 +206,27 @@ bool isExistAccount(char* id) {
 
 	return false;
 }
-bool isLoggedIn(SOCKET client) {
-	for (int i = 0; i < numConnected; i++)
-	{
-		if (client == connected[i].client)
-		{
-			return true;
-		}
-	}
-
-	return false;
+bool isLoggedIn(CLIENT_INFO client) {
+	return client.isConnected == true ? true : false;
 }
 int isLoggedIn(char* id) {
-	for (int i = 0; i < numConnected; i++)
+	for (int i = 0; i < numclients; i++)
 	{
-		if (strcmp(id, connected[i].clientId) == 0)
+		if (strcmp(id, clients[i].clientId) == 0 && clients[i].isConnected == true)
 		{
 			return i;
 		}
 	}
 	return -1;
 }
-void connect(SOCKET client, char* id) {
+void connect(CLIENT_INFO client, char* id) {
 	if (isExistAccount(id))
 	{
-		if (isLoggedIn(id) < 0)
+		if (isLoggedIn(id) < 0 && client.isConnected == false)
 		{
-			connected[numConnected].client = client;
-			strcpy(connected[numConnected].clientId, id);
-			numConnected++;
+			int index = get(client.client);
+			strcpy(clients[index].clientId, id);
+			clients[index].isConnected = true;
 
 			char sbuf[256];
 			sprintf(sbuf, "%s %s %s\n", CONNECT, OKE, LOGIN_SUCCESS);
@@ -262,8 +252,8 @@ void connect(SOCKET client, char* id) {
 	}
 }
 void disconnect(int i) {
-	SOCKET client = connected[i].client;
-	char* id = connected[i].clientId;
+	CLIENT_INFO client = clients[i];
+	char* id = client.clientId;
 
 	char sbuf[256];
 	sprintf(sbuf, "%s %s\n", DISCONNECT, OKE);
@@ -275,20 +265,20 @@ void disconnect(int i) {
 
 	removeLoggedIn(i);
 }
-void sendToClient(SOCKET client, char* msg) {
-	send(client, msg, strlen(msg), 0);
+void sendToClient(CLIENT_INFO client, char* msg) {
+	send(client.client, msg, strlen(msg), 0);
 }
-void sendToAll(SOCKET client, char* msg) {
-	for (int i = 0; i < numConnected; i++)
+void sendToAll(CLIENT_INFO client, char* msg) {
+	for (int i = 0; i < numclients; i++)
 	{
-		if (connected[i].client != client)
+		if (clients[i].client != client.client && clients[i].isConnected == true)
 		{
-			send(connected[i].client, msg, strlen(msg), 0);
+			send(clients[i].client, msg, strlen(msg), 0);
 		}
 	}
 }
 void sendMessage(int i, char* option, char* msg) {
-	SOCKET client = connected[i].client;
+	CLIENT_INFO client = clients[i];
 
 	if (strcmp(option, ALL) == 0)
 	{
@@ -297,7 +287,7 @@ void sendMessage(int i, char* option, char* msg) {
 		sendToClient(client, sbuf);
 
 		sbuf[0] = 0;
-		sprintf(sbuf, "%s %s %s\n", MESSAGE_ALL, connected[i].clientId, msg);
+		sprintf(sbuf, "%s %s %s\n", MESSAGE_ALL, client.clientId, msg);
 		sendToAll(client, sbuf);
 	}
 	else
@@ -310,13 +300,13 @@ void sendMessage(int i, char* option, char* msg) {
 		{
 			char sbuf[256];
 			sprintf(sbuf, "%s %s %s\n", SEND, ERROR, "User is not exist!");
-			sendToClient(connected[i].client, sbuf);
+			sendToClient(client, sbuf);
 		}
 		else
 		{
 			char sbuf[256];
-			sprintf(sbuf, "%s %s %s\n", MESSAGE, connected[i].clientId, msg);
-			sendToClient(connected[targetUserIndex].client, sbuf);
+			sprintf(sbuf, "%s %s %s\n", MESSAGE, client.clientId, msg);
+			sendToClient(clients[targetUserIndex], sbuf);
 
 			sbuf[0] = 0;
 			sprintf(sbuf, "%s %s\n", SEND, OKE);
@@ -324,12 +314,12 @@ void sendMessage(int i, char* option, char* msg) {
 		}
 	}
 }
-void getCurrentLoggedIn(SOCKET client) {
+void getCurrentLoggedIn(CLIENT_INFO client) {
 	char loggedInUsers[2048] = "CURRENT LOGGED IN ";
 
-	for (int i = 0; i < numConnected; i++)
+	for (int i = 0; i < numclients; i++)
 	{
-		strcat(loggedInUsers, connected[i].clientId);
+		strcat(loggedInUsers, clients[i].clientId);
 		strcat(loggedInUsers, " ");
 	}
 
@@ -337,23 +327,22 @@ void getCurrentLoggedIn(SOCKET client) {
 	sendToClient(client, loggedInUsers);
 }
 
-CLIENT_INFO get(SOCKET client) {
-	CLIENT_INFO temp;
-	for (int i = 0; i < numConnected; i++) {
-		if (connected[i].client == client)
+int get(char* id) {
+	for (int i = 0; i < numclients; i++)
+	{
+		if (strcmp(clients[i].clientId, id) == 0)
 		{
-			temp.client = connected[i].client;
-			strcpy(temp.clientId, connected[i].clientId);
-			return temp;
+			return i;
 		}
 	}
 
-	return temp;
+	return -1;
 }
 
-int getIndex(SOCKET client) {
-	for (int i = 0; i < numConnected; i++) {
-		if (connected[i].client == client)
+int get(SOCKET client) {
+	for (int i = 0; i < numclients; i++)
+	{
+		if (clients[i].client == client)
 		{
 			return i;
 		}

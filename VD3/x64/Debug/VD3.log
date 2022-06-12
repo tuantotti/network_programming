@@ -1,0 +1,3 @@
+﻿  VD3.cpp
+D:\Network-Programming\SimpleC-Cplus\VDI\VD3\VD3.cpp(46,35): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  VD3.vcxproj -> D:\Network-Programming\SimpleC-Cplus\VDI\x64\Debug\VD3.exe
