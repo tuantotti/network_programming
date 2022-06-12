@@ -1,3 +1,0 @@
-admin admin
-guest nopass
-tuantotti tuantotti
