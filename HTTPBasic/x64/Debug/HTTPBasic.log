@@ -1,0 +1,6 @@
+﻿  HTTPBasic.cpp
+D:\Network-Programming\SimpleC-Cplus\VDI\HTTPBasic\HTTPBasic.cpp(43,19): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
+D:\Network-Programming\SimpleC-Cplus\VDI\HTTPBasic\HTTPBasic.cpp(67,24): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
+D:\Network-Programming\SimpleC-Cplus\VDI\HTTPBasic\HTTPBasic.cpp(72,58): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\Network-Programming\SimpleC-Cplus\VDI\HTTPBasic\HTTPBasic.cpp(141,30): warning C4244: '/=': conversion from 'float' to 'int', possible loss of data
+  HTTPBasic.vcxproj -> D:\Network-Programming\SimpleC-Cplus\VDI\x64\Debug\HTTPBasic.exe
